@@ -1,0 +1,149 @@
+{
+  "viewTitle": "My profile",
+  "menuStudent": {
+    "signedIn": "Signed In as",
+    "profile": "My Profile",
+    "rooms": "My Room",
+    "matches": "My Matches",
+    "chats": "My Chats",
+    "hosts": "My Hosts",
+    "signOut": "Sign Out"
+  },
+  "studentProfile": {
+    "title": "Student Registration",
+    "registerAs": {
+      "title": "Register as",
+      "comment": "If you are looking for housing, sign up as a student. If you have a room for rent, then sign up as a host.",
+      "form": {
+        "student": "Student",
+        "other": "Did you mean to register as a host?"
+      }
+    },
+    "personalDetails": {
+      "title": "Personal details",
+      "comment": "Your name will be shown publicly, other personal information will be for registration and matching purposes only.",
+      "form": {
+        "firstName": {
+          "title": "First name",
+          "placeholder": "First name"
+        },
+        "lastName": {
+          "title": "Last name",
+          "placeholder": "Last name"
+        },
+        "birthDate": {
+          "title": "Date of birth",
+          "placeholder": "Date of birth"
+        },
+        "birthCountry": {
+          "title": "Country of birth",
+          "placeholder": "Country of birth"
+        },
+        "countryCode": {
+          "title": "Country code",
+          "placeholder": "Select"
+        },
+        "phone": {
+          "title": "Phone number",
+          "placeholder": "2252382"
+        }
+      }
+    },
+    "searchCriteria": {
+      "title": "My search criteria",
+      "comment": "Let us know what type of search criteria you have so that we can help you find the best match.",
+      "form": {
+        "moveInOutDate": {
+          "title": "Preferred move-in / out date",
+          "placeholder": "Select dates"
+        },
+        "moveInDate": {
+          "title": "Preferred move-in date",
+          "placeholder": "Select move-in date"
+        },
+        "moveOutDate": {
+          "title": "Preferred move-out date",
+          "placeholder": "Select move-out date"
+        },
+        "budget": {
+          "title": "Maximum budget",
+          "placeholder": "700"
+        },
+        "city": {
+          "title": "Where will you go",
+          "placeholder": "Utrecht, Amsterdam"
+        }
+      }
+    },
+    "aboutMe": {
+      "title": "About me",
+      "comment": "This information helps us to improve the chance for a succesfull match.",
+      "form": {
+        "gender": {
+          "title": "Gender",
+          "itemRadio": "Male,Female,Rather not say"
+        },
+        "study": {
+          "title": "Study",
+          "placeholder": "Bachelor/Master in ..."
+        },
+        "spokenLanguage": {
+          "title": "Spoken languages",
+          "placeholder": "English, Ukrainian, etc"
+        },
+        "experience": {
+          "title": "Past experience",
+          "itemCheckbox": "Lived with a host,Lived abroad,Lived on my own,None of the above"
+        },
+        "aboutYourself": {
+          "title": "Short description about yourself",
+          "placeholder": "This description will be visible for hosts and guest families. To increase your chance of success write something about who you are, what you like to do in your free time and what you are going to do in the Netherlands. And it is always good to share your favourite dish!"
+        }
+      }
+    },
+    "socialPreferences": {
+      "title": "Social preferences",
+      "comment": "Not everyone is the same. Some wish for more privacy and others are looking for the full experience. An indication helps to find the right match.",
+      "form": {
+        "privacy": {
+          "title": "Privacy",
+          "items": "As much privacy as possible,Let’s share a house and new experiences!"
+        },
+        "newInTown": {
+          "title": "New in town",
+          "items": "I manage myself,I’d prefer a host who helps me get around"
+        }
+      }
+    },
+    "profilePicture": {
+      "title": "Profile picture",
+      "comment": "This picture will be visible for hosts and guest families, so make sure to use a recent photo.",
+      "form": {
+        "photo": {
+          "title": "Please select an image of yourself",
+          "placeholder": "PNG or JPG up to 10MB"
+        }
+      }
+    },
+    "login": {
+      "title": "Login details"
+    },
+    "buttonSkip": {
+      "title": "Skip for now"
+    },
+    "buttonSave": {
+      "title": "Save"
+    },
+    "buttonRemove": {
+      "title": "Delete my account"
+    },
+    "deleteAccount": {
+      "title": "Delete account",
+      "text1": "Warning, when you delete your account you will lose:",
+      "items": "- all your data,- all you conversations with hosts,- all your rooms",
+      "text2": "If you have any questions regarding Hospi Housing please contact us, we’re happy to help!",
+      "buttonKeep": "No, keep my account",
+      "buttonDelete": "Yes, delete my account"
+    }
+  }
+}

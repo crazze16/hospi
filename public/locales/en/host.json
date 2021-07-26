@@ -1,0 +1,113 @@
+{
+  "menuHost": {
+    "signedIn": "Signed In as",
+    "profile": "My Profile",
+    "rooms": "My Rooms",
+    "matches": "My Matches",
+    "chats": "My Chats",
+    "tenats": "My Tenants",
+    "signOut": "Sign Out"
+  },
+  "hostProfile": {
+    "title": "Host Registation",
+    "registerAs": {
+      "title": "Register as",
+      "comment": "If you are looking for housing, sign up as a student. If you have a room for rent, then sign up as a host.",
+      "form": {
+        "host": "Host",
+        "other": "Did you mean to register as a student?"
+      }
+    },
+    "personalDetails": {
+      "title": "Personal details",
+      "comment": "Your name will be shown publicly, other personal information will be for registration and matching purposes only.",
+      "form": {
+        "firstName": {
+          "title": "First name",
+          "placeholder": "First name"
+        },
+        "lastName": {
+          "title": "Last name",
+          "placeholder": "Last name"
+        },
+        "countryCode": {
+          "title": "Country code",
+          "placeholder": "Select"
+        },
+        "phone": {
+          "title": "Phone number",
+          "placeholder": "2252382"
+        }
+      }
+    },
+    "aboutMe": {
+      "title": "About me",
+      "comment": "This information helps us to improve the chance for a succesfull match.",
+      "form": {
+        "gender": {
+          "title": "Gender",
+          "itemRadio": "Male,Female,Rather not say"
+        },
+        "spokenLanguage": {
+          "title": "Spoken languages",
+          "placeholder": "English, Ukrainian, etc"
+        },
+        "aboutYourself": {
+          "title": "Short description about yourself (optional)",
+          "placeholder": "This description will be visible for students that are looking for a room. To increase your chance of success, write something about who you are and what kind of student you are looking for. And it is always good to share your favourite international dish!"
+        }
+      }
+    },
+    "socialPreferences": {
+      "title": "Social preferences",
+      "comment": "Not everyone is the same. Some wish for more privacy and others are looking for the full experience. An indication helps to find the right match.",
+      "form": {
+        "privacy": {
+          "title": "Privacy",
+          "items": "As much privacy as possible,Let’s share a house and new experiences!"
+        },
+        "newInTown": {
+          "title": "Independence of the student",
+          "items": "Highly independent student,I will provide all the assistance needed"
+        }
+      }
+    },
+    "profilePicture": {
+      "title": "Profile picture",
+      "comment": "This picture will be visible for hosts and guest families, so make sure to use a recent photo.",
+      "form": {
+        "photo": {
+          "title": "Please select an image of yourself",
+          "placeholder": "PNG or JPG up to 10MB"
+        }
+      }
+    },
+    "login": {
+      "title": "Login details"
+    },
+    "buttonSkip": {
+      "title": "Skip for now"
+    },
+    "buttonSave": {
+      "title": "Save"
+    },
+    "buttonRemove": {
+      "title": "Delete my account"
+    },
+    "deleteAccount": {
+      "title": "Delete account",
+      "text1": "Warning, when you delete your account you will lose:",
+      "items": "- all your data,- all you conversations with students,- all your rooms",
+      "text2": "If you have any questions regarding Hospi Housing please contact us, we’re happy to help!",
+      "buttonKeep": "No, keep my account",
+      "buttonDelete": "Yes, delete my account"
+    },
+    "requestVerified": {
+      "title": "Get verified by Hospi Housing",
+      "text1": "We from Hospi Housing would like to meet all our hosts personally. This helps us to provide the optimal service, to help you find a good match and to facilitate in your room for experience.",
+      "text2": "Verification is also important for students to be garantueed a safe place to stay.",
+      "buttonSkip": "Skip for now",
+      "buttonRequest": "Request verification"
+    }
+  }
+}

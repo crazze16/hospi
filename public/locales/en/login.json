@@ -1,0 +1,47 @@
+{
+  "login": {
+    "title": "Log in",
+    "email": "Email address",
+    "placeholderemail": "example@example.com",
+    "password": "Password",
+    "buttonFirst": "Log in",
+    "split": "or",
+    "buttonSecond": "Create an account"
+  },
+  "register": {
+    "title": "Create an account",
+    "registerAs": {
+      "title": "Register as",
+      "student": "Student",
+      "host": "Host"
+    },
+    "confirmPassword": "Confirm password",
+    "buttonFirst": "Register",
+    "buttonSecond": "Log in"
+  },
+  "error": {
+    "wrongEmail": "Wrong email",
+    "wrongPassword": "Wrong password",
+    "unequalPasswords": "Unequal passwords " 
+  },
+  "message": {
+    "title": "Verify your account",
+    "text": "Please click the link in your email to verify your account",
+    "buttonTitle": "Go to login page"
+  },
+  "edit": {
+    "title": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "message": {
+      "title": "Info",
+      "text": "Your password has been successfully changed"
+    }
+  },
+  "deleteAccount": {
+    "title": "Info",
+    "text": "Your account was delete",
+    "button": "Return to site"
+  }
+}

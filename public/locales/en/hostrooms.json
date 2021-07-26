@@ -1,0 +1,86 @@
+{
+  "roomsDetails": {
+    "title": "Room details",
+    "typeRoom":{
+      "title": "Type of room",
+      "items": {
+        "room": {
+          "title": "Room",
+          "tooltip": "Bedroom, bathroom & kitchen combined"          
+        },
+        "studio": {
+          "title": "Studio",
+          "tooltip": "Bedroom, bathroom & kitchen combined"          
+        },
+        "entireHouse": {
+          "title": "Entire house",
+          "tooltip": "Bedroom, bathroom & kitchen combined"          
+        }
+      }
+    },
+    "titleRoom": {
+      "title": "Title of your room",
+      "placeholder": "Cozy room in city center"
+    },
+    "countryRoom": {
+      "title": "Country",
+      "placeholder": "Netherlands"
+    },
+    "stateRoom": {
+      "title": "State",
+      "placeholder": "Select your state"
+    },
+    "postalCode": {
+      "title": "Postal code",
+      "placeholder": "C:3551EX IC:3551 EX"
+    },
+    "houseNumber": {
+      "title": "House number",
+      "placeholder": "House number"
+    },
+    "addition": {
+      "title": "Addition",
+      "placeholder": "Addition"
+    },
+    "streetRoom": {
+      "title": "Street",
+      "placeholder": "Enter your street"
+    },
+    "cityRoom": {
+      "title": "City",
+      "placeholder": "Enter your city"
+    }
+  },
+  "aboutTheRoom": {
+    "title": "About the room",
+    "bedroomSize": {
+      "title": "Bedroom size (m2)",
+      "placeholder": "16"
+    },
+    "houseSize": {
+      "title": "Whole house size (m2)",
+      "placeholder": "120"
+    },
+    "sharedUse": {
+      "title": "For shared use",
+      "items": {
+        "toiletShared": {
+          "title": "Shared toilet"}
+      }
+    },
+    "privateUse": {
+      "title": "For private use",
+      "items": {
+        "toiletPrivate": {
+          "title": "Private bathroomt"}
+      }
+    },
+    "descriptionAboutRoom":{
+      "title": "Description of the room",
+      "placeholder": "Tell something about the room, the house and the area you live. For example about what facilities are available, if the house is well connected by public transport and why it is a great place to stay. "
+    },
+    "picturesRoom": {
+      "title": "Pictures of the room"
+    }
+  }
+}
