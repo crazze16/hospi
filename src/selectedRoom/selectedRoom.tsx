@@ -1,7 +1,7 @@
 import {
     AboutTheRoomDetails,
     AboutTheRoomRow,
-    AboutTheRoomSection,
+    AboutTheRoomSection, Arrow, ArrowLeft, ArrowRight,
     AvailabilityAndPricesSection,
     DetailsSection,
     HostDetailsAbout,
@@ -10,7 +10,7 @@ import {
     LeftColumnAbout,
     Location,
     MainBody,
-    MainWrapper,
+    MainWrapper, ModalWindow,
     RightColumnAbout,
     RoomDetailsDescription,
     RoomDetailsSection,
@@ -23,7 +23,7 @@ import {
 } from "./styles";
 import {InfoMessage} from "../pages/HostHouseRegistration/RoomsDetails/styles";
 import {IcoInfo, Label} from "../components/generic";
-import React from "react";
+import React, {useRef, useState} from "react";
 import {SocialPreferences, SpokenLanguages, TitleEdit} from "../components/pageProfileComponents";
 import {useRange} from "../components/Range";
 import {FlexBox} from "../components/containers";
@@ -33,23 +33,29 @@ import Slider from "react-slick";
 export const SelectedRoom = () => {
 
     return (
-        <MainWrapper>
-            <SimpleSlider/>
-            <MainBody>
-                <LeftColumnAbout>
-                    <DetailsSection>
-                        <RoomDetails/>
-                        <AboutTheRoom/>
-                        <AvailabilityAndPrices/>
-                    </DetailsSection>
-                </LeftColumnAbout>
-                <RightColumnAbout>
-                    <HostDetails/>
-                    <AboutTheHost/>
-                    <SocialPreferencesSection/>
-                </RightColumnAbout>
-            </MainBody>
-        </MainWrapper>
+        <>
+            <MainWrapper>
+                <SimpleSlider/>
+                <MainBody>
+                    <LeftColumnAbout>
+                        <DetailsSection>
+                            <RoomDetails/>
+                            <AboutTheRoom/>
+                            <AvailabilityAndPrices/>
+                        </DetailsSection>
+                    </LeftColumnAbout>
+                    <RightColumnAbout>
+                        <HostDetails/>
+                        <AboutTheHost/>
+                        <SocialPreferencesSection/>
+                    </RightColumnAbout>
+                </MainBody>
+            </MainWrapper>
+            {/*<ModalWindow>*/}
+            {/*    <SimpleSlider/>*/}
+            {/*</ModalWindow>*/}
+        </>
+
     )
 }
 
@@ -232,33 +238,61 @@ export const VerifiedByHospiHousing = () => {
     )
 }
 
+const SampleNextArrow = ({onClick}: any) => {
+    return (
+        <ArrowRight onClick={onClick}/>
+    );
+};
+
+const SamplePrevArrow = ({onClick}: any) => {
+    return (
+        <ArrowLeft onClick={onClick}/>
+    );
+}
+
 const SimpleSlider = () => {
+
+    const imgData = [1,2,3,4,5,6];
+
+    const beforeChange = (prev: any, next: any) => {
+        console.log(Math.floor(next));
+    };
+
     const settings = {
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 3,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />,
+        beforeChange: beforeChange,
+        responsive: [
+            {
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 425,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: false,
+                }
+            },
+            ]
     };
+
     return (
         <SliderWrapper>
-            <Slider {...settings}>
-                <SliderElementSC>
+            {<Slider {...settings}>
+                {imgData.map((_, index) => <SliderElementSC key={index}>
                     <img src="https://via.placeholder.com/250" alt=""/>
-                </SliderElementSC>
-                <SliderElementSC>
-                    <img src="https://via.placeholder.com/250" alt=""/>
-                </SliderElementSC>
-                <SliderElementSC>
-                    <img src="https://via.placeholder.com/250" alt=""/>
-                </SliderElementSC>
-                <SliderElementSC>
-                    <img src="https://via.placeholder.com/250" alt=""/>
-                </SliderElementSC>
-                <SliderElementSC>
-                    <img src="https://via.placeholder.com/250" alt=""/>
-                </SliderElementSC>
-            </Slider>
+                </SliderElementSC>)}
+            </Slider> as any}
         </SliderWrapper>
     );
 }

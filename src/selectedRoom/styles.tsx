@@ -68,8 +68,11 @@ export const SocialPreferensecRange = styled.div`
 `;
 
 export const MainBody = styled.div`
-  display: flex
-`
+  display: flex;
+  @media (max-width: ${maxWidthMediaRightColumn}px) {
+    flex-direction: column;
+  }
+`;
 
 export const HostDetailsInfoSection = styled.div`
   display: flex;
@@ -211,9 +214,6 @@ export const AboutTheRoomColumn = styled.div`
     margin-bottom: 16px;
   }
 `;
-// export const AboutTheRoomRightColumn = styled.div`
-//   flex: 1;
-// `;
 
 export const VerifiedByHospi = styled.div`
   width: 202px;
@@ -252,21 +252,77 @@ export const AboutTheRoomRow = styled.div`
 
 `;
 
-export const  SliderWrapper = styled.div`
+const sliderHeight = 253;
+
+export const SliderWrapper = styled.div`
   margin: 16px auto;
-  height: 253px;
+  height: ${sliderHeight}px;
   color: white;
   width: 100%;
-  background: red;
   position: relative;
 
 `;
 export const SliderElementSC = styled.div`
-   background: black;
-  border-radius: 20px;
-  text-transform: capitalize;
-  font-weight: 500;
+  border-radius: 4px;
   color: white;
-  height: 253px;
+  max-width: 340px; //change to 100% if modal
   width: 100%;
+  height: ${sliderHeight}px;
+  padding: 0 2px;
+  & img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    };
+  };
+  @media (max-width: 425px) {
+    max-width: 100%;
+  }
+`;
+
+export const Arrow = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    z-index: 10;
+    top: calc(50% - 24px);
+    border-radius: 4px;
+    &:before {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-top: 3px solid ${textColor};
+        border-left: 3px solid ${textColor};
+        transform: rotate(-45deg);
+        border-radius: 2px;
+    };
+`;
+export const ArrowLeft = styled(Arrow)`
+    left: 16px;
+    &:before {
+                left: 20px;
+    }
+
+`;
+export const ArrowRight = styled(Arrow)`
+    right: 16px;
+    &:before {
+    transform: rotate(135deg);
+    right: 20px;
+    }
+`;
+
+export const ModalWindow = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: black;
+    z-index: 100;
 `;
