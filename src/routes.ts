@@ -46,6 +46,7 @@ import { ProfileUserEdit } from "pages/ProfileUserEdit";
 import { ChangePassword } from "pages/ChangePassword";
 import { HostHouseRegistration } from "pages/HostHouseRegistration";
 import {SelectedRoom} from "./selectedRoom/selectedRoom";
+import {ChatPage} from "./Chat/chat";
 
 export interface IRoute {
   readonly path: string;
@@ -93,7 +94,7 @@ export const studentRoutes: IRoute[] = [
     component: StudentMatches,
     keyLocalize: "matches",
   },
-  { path: STUDENT_CHATS_ROUTE, component: StudentChat, keyLocalize: "chats" },
+  { path: STUDENT_CHATS_ROUTE, component: ChatPage, keyLocalize: "chats" },
   { path: STUDENT_HOSTS_ROUTE, component: StudentHosts, keyLocalize: "hosts" },
 ];
 

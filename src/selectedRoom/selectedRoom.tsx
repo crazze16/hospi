@@ -4,7 +4,7 @@ import {
     AboutTheRoomSection,
     ArrowLeft,
     ArrowRight,
-    AvailabilityAndPricesSection,
+    AvailabilityAndPricesSection, ButtonSection,
     DetailsSection,
     GridWrapper,
     HostDetailsAbout,
@@ -13,21 +13,33 @@ import {
     LeftColumnAbout,
     Location,
     MainBody,
-    MainWrapper, MapSelectedPlace, MapWrapper,
+    MainWrapper,
+    MapSelectedPlace,
+    MapWrapper,
     ModalWindow,
     ModalWindowTitle,
     RightColumnAbout,
     RoomDetailsDescription,
-    RoomDetailsSection,
-    RoomDetailsTitle,
+    RoomDetailsSection, RoomNavigationSection,
+    SectionTitle,
     SliderElementSC,
     SliderWrapper,
     SocialPreferensecRange,
-    TypeOfRoom,
-    VerifiedByHospi
+    TypeOfRoom
 } from "./styles";
 import {InfoMessage} from "../pages/HostHouseRegistration/RoomsDetails/styles";
-import {IcoClock, IcoDone, IcoInfo, IcoWarning, Label, TitleH2, TitleH3} from "../components/generic";
+import {
+    Button,
+    IcoClock,
+    IcoDone,
+    IcoInfo,
+    IcoWarning,
+    Label,
+    TitleH2,
+    TitleH3,
+    TitleH1,
+    IcoArrowRight
+} from "../components/generic";
 import React, {useEffect, useState} from "react";
 import {SocialPreferences, SpokenLanguages} from "../components/pageProfileComponents";
 import {useRange} from "../components/Range";
@@ -36,6 +48,8 @@ import {NotVerification} from "../pages/ProfileUserEdit/HostVerified/styles";
 import {theme} from "../styles/theme";
 import {TVerify} from "../interfaces/intarfaces";
 import GoogleMapReact from 'google-map-react';
+
+    // mock response types //
 
 interface IRoomDetailsResponse {
     roomDescription: string
@@ -53,15 +67,34 @@ interface IRoomDetailsResponse {
     additionalCosts: number
 }
 
-type TRoomDetails = Pick<IRoomDetailsResponse, 'roomDescription' | 'roomType' | 'street' | 'city'>
-type TRoomAbout = Pick<IRoomDetailsResponse, 'bedroomSize' | 'houseSize' | 'sharedUse' | 'privateUse'>
-type TRoomAvailability = Pick<IRoomDetailsResponse, 'availableFrom' | 'availableUntil' | 'roomPrice' | 'deposit' | 'additionalCosts'>
-
 interface IHostDetailsResponse {
     name: string
     activeYears: number
     hostedTimes: number
 }
+
+    // left column components types //
+
+type TRoomDetails = Pick<IRoomDetailsResponse, 'roomDescription' | 'roomType' | 'street' | 'city'>
+type TRoomAbout = Pick<IRoomDetailsResponse, 'bedroomSize' | 'houseSize' | 'sharedUse' | 'privateUse'>
+type TRoomAvailability = Pick<IRoomDetailsResponse, 'availableFrom' | 'availableUntil' | 'roomPrice' | 'deposit' | 'additionalCosts'>
+
+    // slider types //
+
+type TSliderArrow = {
+    onClick?: () => void
+    isModalOpen: boolean
+}
+
+type TSlider = {
+    isModalOpen: boolean
+    setIsModalOpen: (isOpen: boolean) => void
+    imgData: Array<string>
+    setCurrentSlide: (slide: number) => void
+    currentSlide?: number
+}
+
+    // map types //
 
 interface IGoogleMap {
     centerCoordinates: TCoordinates
@@ -70,9 +103,17 @@ interface IGoogleMap {
 }
 
 type TCoordinates = {
-    lat: number
-    lng: number
+   readonly lat: number
+   readonly lng: number
 }
+
+type TPickedPlace = {
+    readonly lat: number
+    readonly lng: number
+    readonly text?: string
+}
+
+    // mock data //
 
 const mockImgData = ['1', '2', '3', '4', '5', '6']
 
@@ -99,7 +140,7 @@ const mockHostDetails: IHostDetailsResponse = {
     hostedTimes: 3
 }
 
-    // USED SHARED COMPONENTS //
+    // SHARED COMPONENTS //
 
 export const AboutMeView: React.FC<{
     genderUser: string | undefined;
@@ -156,13 +197,13 @@ const HostVerify: React.FC<THostVerification> = (props) => {
             </Label>
             {(verification === "unverified" ||
                 verification === "failed") && (
-                <IcoWarning size="1.4em" />
+                <IcoWarning size="1.4em"/>
             )}
             {verification === "verifying" && (
-                <IcoClock size="1.4em" color={theme.colors.thirdly} />
+                <IcoClock size="1.4em" color={theme.colors.thirdly}/>
             )}
             {verification === "verified" && (
-                <IcoDone size="1.4em" color={theme.colors.text} />
+                <IcoDone size="1.4em" color={theme.colors.text}/>
             )}
             {verification === "verified"
                 ? "Verified by Hospi Housing"
@@ -184,7 +225,8 @@ export const SelectedRoom = () => {
     const [hostDetailsData, setHostDetailsData] = useState<IHostDetailsResponse>({} as IHostDetailsResponse)
     const [currentSlide, setCurrentSlide] = useState<number>(0)
 
-    console.log(roomDetailsData)
+    const handleSave = () => {}
+
     useEffect(() => {
         setImgData(mockImgData)
         setRoomDetailsData(mockDetails)
@@ -194,6 +236,7 @@ export const SelectedRoom = () => {
     return (
         <>
             <MainWrapper>
+                <RoomNavigation/>
                 <SimpleSlider isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} imgData={imgData}
                               currentSlide={currentSlide} setCurrentSlide={setCurrentSlide}/>
                 <MainBody>
@@ -213,12 +256,17 @@ export const SelectedRoom = () => {
                         </DetailsSection>
                     </LeftColumnAbout>
                     <RightColumnAbout>
-                        <HostDetails activeYears={hostDetailsData.activeYears} hostedTimes={hostDetailsData.hostedTimes} name={hostDetailsData.name}/>
+                        <HostDetails activeYears={hostDetailsData.activeYears} hostedTimes={hostDetailsData.hostedTimes}
+                                     name={hostDetailsData.name}/>
                         <AboutTheHost/>
                         <SocialPreferencesSection/>
                     </RightColumnAbout>
                 </MainBody>
-                <GoogleMap centerCoordinates={{lat: 59.955413, lng: 30.337844}} zoom={15} placeCoordinates={{lat: 59.955413, lng: 30.337844}}/>
+                <GoogleMap centerCoordinates={{lat: 59.955413, lng: 30.337844}} zoom={15}
+                           placeCoordinates={{lat: 59.955413, lng: 30.337844}}/>
+                <ButtonSection>
+                    <Button main={true} w={'69px'} h={'37px'} onClick={handleSave}>Close</Button>
+                </ButtonSection>
             </MainWrapper>
             {isModalOpen && (
                 <ModalWindow>
@@ -235,59 +283,28 @@ export const SelectedRoom = () => {
     )
 }
 
+
     // USED COMPONENTS IN MAIN COMPONENT //
 
 
+        // NAVIGATION //
 
-const HostDetails: React.FC<IHostDetailsResponse> = (props) => {
-
-    const {activeYears, hostedTimes, name} = props;
+const RoomNavigation = () => {
 
     return (
-        <HostDetailsWrapper>
-            <RoomDetailsTitle>
-                <TitleH2>Host details</TitleH2>
-                <HostVerify verification={"verified"}/>
-                {/*<VerifiedByHospiHousing/>*/}
-            </RoomDetailsTitle>
-            <HostDetailsInfoSection>
-                <HostDetailsAbout>
-                    <p>{name}</p>
-                    <div>
-                        <p><strong>{activeYears}</strong> years active</p>
-                        <p><strong>{hostedTimes}</strong> times hosted before</p>
-                    </div>
-                </HostDetailsAbout>
-                <img src="https://via.placeholder.com/150" alt=""/>
-            </HostDetailsInfoSection>
-        </HostDetailsWrapper>
+        <RoomNavigationSection>
+            <div>
+                <div>My Rooms</div>
+                <IcoArrowRight size=".8em" />
+            </div>
+            <div>
+                Cozy room - Haarlemmerdijk, Amsterdam
+            </div>
+        </RoomNavigationSection>
     )
 }
 
-const AboutTheHost = () => {
-
-    return (
-        <HostDetailsWrapper>
-            <RoomDetailsTitle>
-                <TitleH2>About the room</TitleH2>
-            </RoomDetailsTitle>
-            <AboutMeView descriptionUser='Lorem ipsum dolor sit amet, consectetur adipisicing elit. A animi assumenda aut blanditiis cum debitis deserunt dicta dignissimos et eum ex explicabo hic impedit laudantium molestias odio placeat, quis, ut?' genderUser={'male'} spokenLanguage={['EN']} />
-        </HostDetailsWrapper>
-    )
-}
-
-const SocialPreferencesSection = () => {
-    return (
-        <HostDetailsWrapper>
-            <RoomDetailsTitle>
-                <TitleH2>Social preferences</TitleH2>
-            </RoomDetailsTitle>
-            <SocialPreferensecRange>
-                <SocialPreferences newInTown={useRange(40)} privacy={useRange(50)} roleUser={"host"}/>
-            </SocialPreferensecRange>
-        </HostDetailsWrapper>
-    )
-}
+        // LEFT COLUMN //
 
 const RoomDetails: React.FC<TRoomDetails> = (props) => {
 
@@ -295,10 +312,10 @@ const RoomDetails: React.FC<TRoomDetails> = (props) => {
 
     return (
         <RoomDetailsSection>
-            <RoomDetailsTitle>
+            <SectionTitle>
                 <TitleH2>Room details</TitleH2>
                 <HostVerify verification={"verified"}/>
-            </RoomDetailsTitle>
+            </SectionTitle>
             <RoomDetailsDescription>
                 {roomDescription}
             </RoomDetailsDescription>
@@ -330,9 +347,9 @@ const AboutTheRoom: React.FC<TRoomAbout> = (props) => {
 
     return (
         <AboutTheRoomSection>
-            <RoomDetailsTitle>
+            <SectionTitle>
                 <TitleH2>About the room</TitleH2>
-            </RoomDetailsTitle>
+            </SectionTitle>
             <AboutTheRoomRow>
                 <div>
                     <TitleH3>Bedroom size (m2)</TitleH3>
@@ -363,9 +380,9 @@ export const AvailabilityAndPrices: React.FC<TRoomAvailability> = (props) => {
 
     return (
         <AvailabilityAndPricesSection>
-            <RoomDetailsTitle>
+            <SectionTitle>
                 <TitleH2>Availability & prices</TitleH2>
-            </RoomDetailsTitle>
+            </SectionTitle>
             <AboutTheRoomDetails>
                 <AboutTheRoomRow>
                     <div>
@@ -402,30 +419,84 @@ export const AvailabilityAndPrices: React.FC<TRoomAvailability> = (props) => {
     )
 }
 
-export const VerifiedByHospiHousing = () => {
+        // RIGHT COLUMN //
+
+const HostDetails: React.FC<IHostDetailsResponse> = (props) => {
+
+    const {activeYears, hostedTimes, name} = props;
+
     return (
-        <VerifiedByHospi>
-            Verified by Hospi Housing
-        </VerifiedByHospi>
+        <HostDetailsWrapper>
+            <SectionTitle>
+                <TitleH2>Host details</TitleH2>
+                <HostVerify verification={"verified"}/>
+            </SectionTitle>
+            <HostDetailsInfoSection>
+                <HostDetailsAbout>
+                    <p>{name}</p>
+                    <div>
+                        <p><strong>{activeYears}</strong> years active</p>
+                        <p><strong>{hostedTimes}</strong> times hosted before</p>
+                    </div>
+                </HostDetailsAbout>
+                <img src="https://via.placeholder.com/150" alt=""/>
+            </HostDetailsInfoSection>
+        </HostDetailsWrapper>
     )
 }
 
-const SampleNextArrow = ({onClick, isModalOpen}: any) => {
+const AboutTheHost = () => {
+
+    return (
+        <HostDetailsWrapper>
+            <SectionTitle>
+                <TitleH2>About the room</TitleH2>
+            </SectionTitle>
+            <AboutMeView
+                descriptionUser='Lorem ipsum dolor sit amet, consectetur adipisicing elit. A animi assumenda aut blanditiis cum debitis deserunt dicta dignissimos et eum ex explicabo hic impedit laudantium molestias odio placeat, quis, ut?'
+                genderUser={'male'} spokenLanguage={['EN']}/>
+        </HostDetailsWrapper>
+    )
+}
+
+const SocialPreferencesSection = () => {
+    return (
+        <HostDetailsWrapper>
+            <SectionTitle>
+                <TitleH2>Social preferences</TitleH2>
+            </SectionTitle>
+            <SocialPreferensecRange>
+                <SocialPreferences newInTown={useRange(40)} privacy={useRange(50)} roleUser={"host"}/>
+            </SocialPreferensecRange>
+        </HostDetailsWrapper>
+    )
+}
+
+        // SLIDER //
+
+const SampleNextArrow: React.FC<TSliderArrow> = (props) => {
+
+    const {onClick, isModalOpen} = props
+
         return (
             <ArrowRight onClick={onClick} isModalOpen={isModalOpen}/>
         );
     }
-;
 
-const SamplePrevArrow = ({onClick, isModalOpen}: any) => {
+const SamplePrevArrow: React.FC<TSliderArrow> = (props) => {
+
+    const {onClick, isModalOpen} = props
+
     return (
-        <ArrowLeft onClick={onClick} isModalOpen={isModalOpen} />
+        <ArrowLeft onClick={onClick} isModalOpen={isModalOpen}/>
     );
 }
 
-const SimpleSlider = ({isModalOpen, setIsModalOpen, imgData, setCurrentSlide}: any) => {
-    const beforeChange = (prev: any, next: any) => {
-        console.log(next)
+const SimpleSlider: React.FC<TSlider> = (props) => {
+
+    const {setIsModalOpen, isModalOpen, imgData, setCurrentSlide} = props
+
+    const beforeChange = (prev: number, next: number) => {
         setCurrentSlide(Math.floor(next));
     };
 
@@ -435,8 +506,8 @@ const SimpleSlider = ({isModalOpen, setIsModalOpen, imgData, setCurrentSlide}: a
         speed: 500,
         slidesToShow: isModalOpen ? 1 : 3,
         slidesToScroll: 1,
-        nextArrow: <SampleNextArrow isModalOpen={isModalOpen} />,
-        prevArrow: <SamplePrevArrow isModalOpen={isModalOpen} />,
+        nextArrow: <SampleNextArrow isModalOpen={isModalOpen}/>,
+        prevArrow: <SamplePrevArrow isModalOpen={isModalOpen}/>,
         beforeChange: beforeChange,
         responsive: [
             {
@@ -459,21 +530,24 @@ const SimpleSlider = ({isModalOpen, setIsModalOpen, imgData, setCurrentSlide}: a
 
     return (
         <SliderWrapper isModalOpen={isModalOpen}>
-            {<Slider {...settings}>
-                {imgData.map((_: any, index: number) => <SliderElementSC key={index}
+            <Slider {...settings}>
+                {imgData.map((_: string, index: number) => <SliderElementSC key={index}
                                                                          onClick={() => setIsModalOpen(true)}>
                     <img src="https://via.placeholder.com/250" alt=""/>
                 </SliderElementSC>)}
-            </Slider> as any}
+            </Slider>
         </SliderWrapper>
     );
 }
 
-const PickedPlace = (props: any) => {
+    // MAP //
+
+const PickedPlace: React.FC<TPickedPlace> = (props) => {
     return (
         <MapSelectedPlace>
-            <div/>
-            {/*{props.text}*/}
+            <div>
+                {props.text}
+            </div>
         </MapSelectedPlace>
     )
 }
@@ -490,7 +564,7 @@ const GoogleMap: React.FC<IGoogleMap> = (props) => {
             >
                 <PickedPlace
                     {...placeCoordinates}
-                    text=""
+                    text="text"
                 />
             </GoogleMapReact>
         </MapWrapper>
