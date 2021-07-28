@@ -61,7 +61,7 @@ export const publicRoutes: IRoute[] = [
     keyLocalize: "findroom",
   }, // FindRoom
   { path: BECOMEHOST_ROUTE, component: BecomeHost, keyLocalize: "becomehost" },
-  { path: BLOG_ROUTE, component: SelectedRoom, keyLocalize: "blog" },  //Blog
+  { path: BLOG_ROUTE, component: ChatPage, keyLocalize: "blog" },  //Blog
   { path: CONTACT_ROUTE, component: Contact, keyLocalize: "contact" },
 ];
 

@@ -8,7 +8,9 @@ import {
   Clock,
   Check2Circle,
   InfoCircle,
-    ChevronRight
+    ChevronRight,
+    ArrowRightShort,
+    ThreeDots,
 } from "@styled-icons/bootstrap";
 import {
   MixinFloatElement,
@@ -146,6 +148,22 @@ export const IcoArrowRight = styled(ChevronRight)<{ left?: boolean}>`
       transform: rotateY(180deg);
     `}
 `;
+
+export const IcoShortArrowRight = styled(ArrowRightShort)<{ left?: boolean}>`
+  color: ${(props) => props.theme.colors.place};
+  //padding: 0 4px 2px 0;
+  ${(props) =>
+      props.left &&
+      css`
+      transform: rotateY(180deg);
+    `}
+`;
+
+export const IcoThreeDots = styled(ThreeDots)<{color?: string}>`
+  color: ${(props) => props.color ? props.color : props.theme.colors.place};
+`;
+
+
 export const IcoDone = styled(Check2Circle)`
   padding: 0 4px 2px 0;
 `;
