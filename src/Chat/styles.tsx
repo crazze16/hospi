@@ -43,6 +43,7 @@ export const Conversations = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   & > div {
     width: 210px;
     border-right: 1px solid ${border};
@@ -50,6 +51,7 @@ export const Conversations = styled.div`
     flex: 1;
     margin-bottom: 16px;
   }
+
   & button {
     width: 100%;
     font-weight: bold;
@@ -73,12 +75,15 @@ export const ConversationListItem = styled.li<{ isActive: boolean }>`
   display: flex;
   align-items: center;
   background: ${props => props.isActive ? conversationBackground : ''};
+  position: relative;
   width: 100%;
   padding: 8px;
   border-radius: 4px;
+
   & :hover {
     cursor: pointer;
   }
+
   & img {
     width: 24px;
     height: 24px;
@@ -108,6 +113,69 @@ export const ConversationListItem = styled.li<{ isActive: boolean }>`
   }
 `;
 
+export const PopoverContainer = styled.div<{ isOpen: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.55);
+  display: ${props => props.isOpen ? 'flex' : 'none'};
+  justify-content: center;
+  align-items: center;
+`
+
+export const DropDownMenu = styled.div`
+  width: 515px;
+  padding: 24px;
+  background: #FFFCF6;
+  border-radius: 4px;
+  border: 1px solid ${border};
+  
+  p {
+    white-space: break-spaces;
+    margin: 16px 0;
+    color: ${mainText}
+  }
+
+  div {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      margin-left: 24px;
+    }
+  }
+`
+
+export const ClosePopup = styled.div`
+  position: relative;
+  height: 0;
+  span {
+    position: absolute;
+    right: 24px;
+    top: 0;
+    height: 16px;
+    &:hover {
+      cursor: pointer;
+    }
+    &:before, &:after {
+      position: absolute;
+      left: 15px;
+      content: ' ';
+      height: 100%;
+      width: 2px;
+      background: ${mainText};
+    }
+    &:before {
+      transform: rotate(45deg);
+    }
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
+`;
 
 export const InputMessage = styled.textarea`
   width: 100%;
@@ -125,6 +193,7 @@ export const InputMessageSection = styled.div`
   border-radius: 8px;
   padding-right: 8px;
   margin-right: 16px;
+
   & button {
     display: flex;
     align-items: center;
@@ -140,10 +209,12 @@ export const SelectedConversationTitle = styled.div`
   display: flex;
   align-items: flex-end;
   min-height: 28px;
+
   & h1 {
     width: fit-content;
     margin-right: 16px;
   }
+
   & a {
     color: ${linkColor};
     text-decoration: none;
@@ -166,10 +237,11 @@ export const NewMessageAlert = styled.div`
   z-index: 10;
   opacity: 70%;
   transition: all .2s ease-in-out;
+
   &:hover {
     cursor: pointer;
     opacity: 1;
-    
+
   }
 `
 
@@ -205,16 +277,17 @@ export const InvitationTitle = styled.div`
   text-align: center;
   font-weight: 600;
 `;
-export const InvitationSubTitle = styled.div<{fontWeight?: string, color?: 'main' | 'sub'}>`
+export const InvitationSubTitle = styled.div<{ fontWeight?: string, color?: 'main' | 'sub' }>`
   text-align: center;
   font-weight: ${props => props.fontWeight && `${props.fontWeight}`};
-  color: ${props => props.color === 'sub' && `${subText}`} 
+  color: ${props => props.color === 'sub' && `${subText}`}
 `;
 export const ButtonGroup = styled.div`
   margin-top: 10px;
   display: flex;
   justify-content: center;
   height: 100%;
+
   & button:nth-last-child(1) {
     margin-left: 10px;
   }
@@ -224,7 +297,8 @@ export const TextInfoContainer = styled.div<{
     width?: number,
     alignCenter?: boolean,
     border?: boolean,
-    p?: string}>`
+    p?: string
+}>`
   width: 100%;
   color: ${mainText};
   margin: 16px 0;
@@ -232,17 +306,21 @@ export const TextInfoContainer = styled.div<{
   ${props => props.border && `border: 1px solid ${border}`};
   ${props => props.border && `border-radius: 4px`};
   ${props => props.p && `padding: ${props.p}`};
+
   & h1 {
     margin-bottom: 24px;
   }
+
   & h2 {
     margin-bottom: 8px;
   }
+
   & div {
     p:not(:last-child) {
       margin-bottom: 24px;
     }
   }
+
   & p {
     font-size: 20px;
     ${props => props.width && `max-width: ${props.width}px`};
@@ -252,11 +330,24 @@ export const TextInfoContainer = styled.div<{
       color: ${subText};
     }
   }
+
   & button {
-    margin-top: 24px;
+    margin-top: 24px; 
     font-weight: 600;
   }
 `;
 export const NoChatsText = styled.p`
 
+`;
+
+export const AreaWrapper = styled.div.attrs(({props}: any) => {})`
+  -moz-appearance: textfield-multiline;
+  -webkit-appearance: textarea;
+  border: 1px solid gray;
+  height: 28px;
+  overflow: auto;
+  padding: 2px;
+  resize: both;
+  width: 400px;
+  -webkit-user-modify: read-write-plaintext-only;
 `;

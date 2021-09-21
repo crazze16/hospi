@@ -1,12 +1,14 @@
 import {
+    AreaWrapper,
     ButtonGroup,
     ChatBody,
     ChatSection,
-    ChatWrapper,
+    ChatWrapper, ClosePopup,
     ConversationList,
     ConversationListItem,
     Conversations,
     ConversationsTitle,
+    DropDownMenu,
     InputMessage,
     InputMessageSection,
     InvitationSubTitle,
@@ -14,12 +16,12 @@ import {
     MessageSection,
     MessageSectionWrapper,
     MessageWrapper,
-    NewMessageAlert,
+    NewMessageAlert, PopoverContainer,
     SelectedConversationTitle,
     TextInfoContainer
 } from "./styles";
 import {Button, IcoShortArrowRight, IcoThreeDots, TitleH1, TitleH2} from "../components/generic";
-import React, {Dispatch, SetStateAction, useCallback, useEffect, useRef, useState} from "react";
+import React, {Dispatch, SetStateAction, useEffect, useMemo, useRef, useState} from "react";
 import {NavLink} from "react-router-dom";
 
 type TMyMessage = {
@@ -58,7 +60,7 @@ interface ISingleConversation {
     activeConversation: TConversation | null
     setActiveConversation: (conversation: TConversation | null) => void
     conversation: TConversation
-    setActiveCallback: any
+    isActive?: boolean
 }
 
 // mock data //
@@ -70,26 +72,15 @@ const MockConversationsData: Array<TConversation> = [
     {name: 'Test name', userId: 4, img: 'https://via.placeholder.com/30'},
 ]
 
+
 export const ChatPage = () => {
     const [messageData, setMessageData] = useState<Array<TMyMessage>>([]);
     const [scrollMode, setScrollMode] = useState<boolean>(true);
     const [isNewMessages, setIsNewMessages] = useState<boolean>(false);
-    const [conversations, setConversations] = useState<Array<TConversation>>([])
-    const [activeConversation, setActiveConversation] = useState<TConversation | null>(null)
+    const [conversations, setConversations] = useState<Array<TConversation>>([]);
+    const [activeConversation, setActiveConversation] = useState<TConversation | null>(null);
+    const [isRemoveChatPopupOpen, setIsRemoveChatPopupOpen] = useState<boolean>(false);
     console.log('ACTIVE CONVERSATION:', activeConversation)
-    // const F = (data: any) => useCallback(() => {
-    //     setActiveConversation(data)
-    // }, [activeConversation])
-
-
-    const setActiveCallback = useCallback((_id) => {
-        console.log(_id);
-        setActiveConversation({name: 'Test name', userId: 3, img: 'https://via.placeholder.com/30'})
-    }, [activeConversation?.userId])
-
-    // const F = useCallback(() => {
-    //     setActiveConversation({name: 'Test name', userId: 3, img: 'https://via.placeholder.com/30'})
-    // }, [activeConversation])
 
     useEffect(() => {
         setConversations(MockConversationsData)
@@ -100,6 +91,7 @@ export const ChatPage = () => {
             <NoChatsInfoSection/>
             <FirstMeetChatInfoSection/>
             <GetHelpChatInfoSection/>
+            <ConversationDropDownMenu isOpen={isRemoveChatPopupOpen} setIsOpen={setIsRemoveChatPopupOpen} name={activeConversation?.name}/>
             <SelectedConversationTitle>
                 {
                     activeConversation && (
@@ -110,6 +102,7 @@ export const ChatPage = () => {
                     )
                 }
             </SelectedConversationTitle>
+            <Area/>
             <ChatSection>
                 <ChatBody>
                     <Conversations>
@@ -118,12 +111,12 @@ export const ChatPage = () => {
                             <ConversationList>
                                 {
                                     conversations?.map((item, index) =>
-                                        <SingleConversation
+                                        <MemoConv
                                             key={index}
                                             conversation={item}
                                             activeConversation={activeConversation}
                                             setActiveConversation={setActiveConversation}
-                                            setActiveCallback={setActiveCallback}
+                                            isActive={activeConversation?.userId === item.userId}
                                         />
                                     )
                                 }
@@ -191,7 +184,7 @@ const MessagesList: React.FC<IMessagesList> = React.memo((props) => {
 })
 
 const SingleConversation: React.FC<ISingleConversation> = React.memo((props) => {
-    const {activeConversation, setActiveConversation, setActiveCallback} = props;
+    const {activeConversation, setActiveConversation} = props;
     const {name, img, userId} = props.conversation;
 
     console.log('SINGLE CONV')
@@ -204,6 +197,12 @@ const SingleConversation: React.FC<ISingleConversation> = React.memo((props) => 
         </ConversationListItem>
     )
 });
+
+const MemoConv: React.FC<ISingleConversation> = (props) => {
+    return useMemo(() => {
+        return <SingleConversation {...props}/>
+    }, [props.isActive])
+}
 
 const MessageInput: React.FC<TMessageInput> = (props) => {
 
@@ -338,5 +337,129 @@ const SendMessageInfoSection = () => {
                 <span>What would you like to know before meeting this person in your house?</span>
             </p>
         </TextInfoContainer>
+    )
+}
+
+export const ConversationDropDownMenu: React.FC<{isOpen: boolean, setIsOpen: (isOpen: boolean) => void, name: string | undefined}> = (props) => {
+
+    const {isOpen, setIsOpen, name} = props;
+
+    const closeHandler = () => {
+        setIsOpen(false)
+    }
+
+    const message = `Warning, when you remove this chat you will lose the whole chat history which cannot be undone.
+        
+If you have any issues regarding this user or Hospi Housing please contact us, we’re happy to help!`
+
+    return (
+        <PopoverContainer isOpen={isOpen}>
+            <DropDownMenu>
+                <ClosePopup onClick={closeHandler}>
+                    <span/>
+                </ClosePopup>
+                <TitleH2>Remove chat with {name && name}</TitleH2>
+                <p>
+                    {message}
+                </p>
+                <div>
+                    <Button normal>No, keep this chat</Button>
+                    <Button danger>Yes, remove this chat</Button>
+                </div>
+            </DropDownMenu>
+        </PopoverContainer>
+    )
+}
+
+export const Area = () => {
+    const ref = useRef(null)
+
+    const [value, setValue] = useState<string>(``)
+    const [selectedText, setSelectedText] = useState<any>('')
+
+    const [spanValue, setSpanValue] = useState<any>([])
+
+    useEffect(() => {
+        const arr = value.trim().split(' ')
+        for(let i = 0; i < arr.length; i++) {
+            arr[i] = `${arr[i]}`
+        }
+        setSpanValue(arr)
+        // console.log(arr)
+    }, [value])
+
+    console.log(spanValue)
+
+    function getSelectionText() {
+        setSelectedText(window?.getSelection()?.toString())
+        if (window.getSelection) {
+            let wrapper = `<span style="color: red">${window?.getSelection()?.toString()}</span>`
+            // setValue(value.slice(0,3) + `<span style="color: red">222</span>` + value.slice(6))
+            // setValue(`${value1.slice(0, window?.getSelection()?.getRangeAt(0).startOffset)}${wrapper}${value1.slice(window?.getSelection()?.getRangeAt(0).endOffset)}`)
+        }
+    }
+
+    // const onKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    //     setValue(prevState => prevState + e.key)
+    //     console.log(value)
+    // }
+
+    function replaceSelectedText(text: any) {
+
+        // if (window?.getSelection()?.getRangeAt(0) != undefined) {
+        //     let startPos = txtArea.selectionStart;
+        //     let endPos = txtArea.selectionEnd;
+        //     selectedText = txtArea.value.substring(startPos, endPos);
+        //     txtArea.value = txtArea.value.slice(0, startPos) + text + txtArea.value.slice(endPos);
+        // }
+    }
+
+
+    return (
+        <>
+            <AreaWrapper onMouseUp={getSelectionText} contenteditable ref={ref} onInput={(e: any) => setValue(e.currentTarget.innerHTML)}>
+            </AreaWrapper>
+            <div>
+                {spanValue.map((item: any, index: any) => <MySpan item={item} _id={index} key={index} />)}
+            </div>
+            {selectedText}
+            {/*<div  onMouseUp={() => getSelectionText()}/>*/}
+        </>
+    )
+}
+
+const MySpan = (props: any) => {
+    const {item, _id} = props;
+
+    const [startOffSet, setStartOffSet] = useState<number | undefined>(0)
+    const [endOffSet, setEndOffSet] = useState<number | undefined>(0)
+
+    const [spanValue, setSpanValue] = useState<any>('')
+
+    const addStyle = (e: React.MouseEvent<HTMLSpanElement>) => {
+        e.currentTarget.style.background = 'red'
+    }
+
+    useEffect(() => {
+        setSpanValue(item)
+    }, [item])
+
+    const selection = () => {
+        //     console.log(window?.getSelection()?.focusNode?.textContent?.length)
+        setStartOffSet(window?.getSelection()?.getRangeAt(0).startOffset)
+        setEndOffSet(window?.getSelection()?.getRangeAt(0).endOffset)
+        //@ts-ignore
+
+        // console.log(window?.getSelection()?.focusNode?.textContent)
+        // console.log(window?.getSelection())
+        setSpanValue(item.slice(0,startOffSet) + item.slice(endOffSet))
+        console.log('START:', startOffSet)
+        console.log('END:', endOffSet)
+        console.log(window?.getSelection()?.getRangeAt(0))
+    }
+
+    return (
+
+        <span onClick={addStyle} onMouseUp={() => selection()}>{spanValue} </span>
     )
 }
